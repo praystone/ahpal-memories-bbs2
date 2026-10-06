@@ -1,0 +1,19 @@
+baseURL = 'https://memories.ahpal.com/bbs2/'
+locale = 'zh-tw'
+title = 'AHPAL 回憶館 · BBS2'
+disableKinds = ['RSS', 'taxonomy', 'term']
+
+[pagination]
+  pagerSize = 50
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  description = '頂客論壇 · BBS 歷史討論區（第二階段）'
+  author = 'AHPAL'
+  theme_color = '#0D1117'
+  accent_gold = '#D4AF37'
+  accent_cyan = '#58A6FF'

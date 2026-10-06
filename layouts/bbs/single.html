@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="bbs-container">
+  <nav class="bbs-breadcrumb"><a href="/">首頁</a> / <a href="/bbs/">BBS</a> / <span>{{ .Title }}</span></nav>
+  <h1 class="bbs-title">{{ .Title }}</h1>
+  <p class="bbs-meta">作者：{{ .Params.author }} · 發表於 {{ if .Params.dateline }}{{ (time .Params.dateline).Format "2006-01-02" }}{{ end }}</p>
+  <div id="bbs-posts" data-tid="{{ .Params.tid }}" data-fid="{{ .Params.fid }}"><p class="bbs-loading">載入帖子中...</p></div>
+</div>
+<script src="/js/bbs-loader.js"></script>
+{{ end }}

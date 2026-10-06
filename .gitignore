@@ -1,0 +1,18 @@
+# Hugo
+resources/
+.hugo_build.lock
+
+# Hugo 編譯產出（不進 Git）
+public/
+
+# 系統
+.DS_Store
+Thumbs.db
+
+# 備份
+*.bak
+*.bak-*
+
+# 暫存
+*.tmp
+*.log

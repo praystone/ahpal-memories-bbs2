@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="bbs-container">
+{{ if eq .Parent.Section "" }}
+  <nav class="bbs-breadcrumb"><a href="/">首頁</a> / <span>BBS 討論區</span></nav>
+  <h1 class="bbs-title">BBS 討論區</h1>
+  <p class="bbs-meta">共 {{ len .Sections }} 個版塊</p>
+  <div class="bbs-forum-grid">
+    {{ range .Sections }}
+    <a class="bbs-forum-card" href="{{ .RelPermalink }}"><h3>{{ .Title }}</h3><p>{{ len .Pages }} 篇主題</p></a>
+    {{ end }}
+  </div>
+{{ else }}
+  <nav class="bbs-breadcrumb"><a href="/">首頁</a> / <a href="/bbs/">BBS</a> / <span>{{ .Title }}</span></nav>
+  <h1 class="bbs-title">{{ .Title }}</h1>
+  <p class="bbs-meta">共 {{ len .Pages }} 篇主題</p>
+  <ul class="bbs-thread-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <li class="bbs-thread-item"><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="bbs-thread-meta">{{ .Params.author }} · {{ if .Params.dateline }}{{ (time .Params.dateline).Format "2006-01-02" }}{{ end }}</span></li>
+    {{ end }}
+  </ul>
+{{ end }}
+</div>
+{{ end }}

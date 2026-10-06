@@ -1,0 +1,535 @@
+/* ============================================================
+   AHPAL 回憶館 — 深色系樣式 v1.0
+   參考：小說站樣式
+   最後更新：2026-10-05
+   ============================================================ */
+
+:root {
+    --bg-base:       #0D1117;
+    --bg-card:       #161B22;
+    --bg-hover:      #1C2128;
+    --border:        #2D303A;
+    --text-main:     #E6EDF3;
+    --text-sub:      #8B949E;
+    --text-muted:    #6E7681;
+    --gold:          #D4AF37;
+    --gold-soft:     #ecc94b;
+    --cyan:          #58A6FF;
+    --green:         #3FB950;
+    --red:           #F85149;
+    --radius-sm:     8px;
+    --radius-md:     12px;
+    --radius-lg:     16px;
+    --shadow-card:   0 4px 20px rgba(0,0,0,0.4);
+    --shadow-hover:  0 8px 28px rgba(0,0,0,0.55);
+    --transition:    0.25s ease;
+    --max-width:     1100px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    background: var(--bg-base);
+    color: var(--text-main);
+    line-height: 1.9;
+    font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== Header ==================== */
+.site-header {
+    background: rgba(13, 17, 23, 0.95);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+}
+
+.logo:hover { color: var(--gold-soft); }
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+    border-bottom-color: var(--cyan);
+}
+
+/* ==================== Main ==================== */
+.main-wrapper {
+    flex: 1;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px;
+    width: 100%;
+}
+
+.main-content {
+    width: 100%;
+}
+
+/* ==================== Card ==================== */
+.content-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 44px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-card);
+    transition: var(--transition);
+}
+
+@media (max-width: 640px) {
+    .content-card { padding: 24px 20px; }
+}
+
+.content-card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+/* ==================== Headings ==================== */
+h1 {
+    font-size: 2em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: var(--gold);
+    margin: 32px 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: var(--cyan);
+    margin: 20px 0 12px 0;
+    font-weight: 600;
+}
+
+/* ==================== Links ==================== */
+a {
+    color: var(--cyan);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover { color: var(--gold); }
+
+/* ==================== Hero ==================== */
+.hero-title {
+    font-size: 2.2em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 800;
+}
+
+.hero-desc {
+    text-align: center;
+    color: var(--text-sub);
+    margin-bottom: 32px;
+    font-size: 16px;
+}
+
+/* ==================== Stats Grid ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.stat-card {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 16px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+}
+
+.stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: "SF Mono", monospace;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-top: 4px;
+}
+
+/* ==================== Card Grid (會員) ==================== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.card {
+    display: block;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 18px;
+    text-decoration: none;
+    transition: var(--transition);
+    color: var(--text-main);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    word-break: break-all;
+}
+
+.card-meta {
+    font-size: 13px;
+    color: var(--text-sub);
+}
+
+/* ==================== Blog List ==================== */
+.blog-list {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.blog-list-item {
+    margin-bottom: 8px;
+}
+
+.blog-list-item a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    text-decoration: none;
+    transition: var(--transition);
+    gap: 12px;
+}
+
+.blog-list-item a:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateX(4px);
+}
+
+.blog-title {
+    font-weight: 600;
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+.blog-author {
+    font-size: 13px;
+    color: var(--text-sub);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ==================== 會員頁 ==================== */
+.member-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.member-name {
+    font-size: 1.8em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 800;
+}
+
+.member-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-sub);
+}
+
+.member-meta span {
+    padding: 4px 12px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.section-title {
+    font-size: 1.3em;
+    color: var(--gold);
+    margin: 32px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ==================== 日誌頁（閱讀） ==================== */
+.blog-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.blog-title {
+    font-size: 1.8em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.blog-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-sub);
+}
+
+.blog-content {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--text-main);
+}
+
+.blog-content p {
+    margin-bottom: 16px;
+}
+
+/* ==================== 日誌頁（分頁） ==================== */
+.blog-entry {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.blog-entry:last-of-type {
+    border-bottom: none;
+    margin-bottom: 24px;
+}
+
+.blog-entry-title {
+    font-size: 1.5em;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 700;
+    line-height: 1.4;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.blog-entry-meta {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.blog-entry-body {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-main);
+}
+
+.blog-entry-body p {
+    margin-bottom: 14px;
+}
+
+/* ==================== 分頁導覽 ==================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    padding: 8px 20px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--cyan);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.pagination a:hover {
+    background: var(--gold);
+    color: var(--bg-base);
+    border-color: var(--gold);
+}
+
+.pagination span {
+    color: var(--text-sub);
+    font-size: 14px;
+}
+
+/* ==================== Footer ==================== */
+.site-footer {
+    background: #010409;
+    border-top: 1px solid var(--border);
+    padding: 40px 24px 32px 24px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.footer-brand {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.footer-desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-bottom: 8px;
+}
+
+.footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ==================== Back to Top ==================== */
+#back-to-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--bg-base);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-card);
+    z-index: 99;
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+#back-to-top:hover {
+    background: var(--gold-soft);
+    transform: translateY(-2px);
+}
+
+/* ==================== 響應式 ==================== */
+@media (max-width: 768px) {
+    .logo { font-size: 18px; }
+    h1 { font-size: 1.6em; }
+    .hero-title { font-size: 1.6em; }
+    h2 { font-size: 1.3em; }
+    .blog-title { font-size: 1.4em; }
+    .blog-entry-title { font-size: 1.2em; }
+    .member-name { font-size: 1.4em; }
+    .header-inner { padding: 12px 16px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 14px; }
+    .main-wrapper { padding: 20px 16px; }
+    .blog-list-item a { padding: 12px 16px; }
+    .blog-author { font-size: 12px; }
+}
+/* BBS 區塊 */
+.section-title { font-size: 22px; font-weight: 700; color: #D4AF37; margin: 0 0 6px 0; }
+.section-desc { font-size: 14px; color: #8B949E; margin: 0 0 20px 0; }
+.forum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+.forum-card { display: block; background: rgba(255,255,255,0.03); border: 1px solid #2D303A; border-radius: 10px; padding: 16px 18px; text-decoration: none; transition: all 0.2s; }
+.forum-card:hover { background: rgba(212,175,55,0.08); border-color: #D4AF37; transform: translateY(-2px); }
+.forum-card h3 { font-size: 16px; color: #E6EDF3; margin: 0 0 4px 0; }
+.forum-card p { font-size: 13px; color: #58A6FF; margin: 0; }
+.forum-more { text-align: right; margin-top: 12px; }
+.forum-more a { color: #D4AF37; text-decoration: none; font-size: 14px; font-weight: 600; }
+.forum-more a:hover { text-decoration: underline; }
