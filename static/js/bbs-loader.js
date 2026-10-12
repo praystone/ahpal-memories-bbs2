@@ -1,9 +1,10 @@
 (function() {
   var box = document.getElementById("bbs-posts");
   if (!box) return;
-  var tid = parseInt(box.dataset.tid, 10);
-  var fid = parseInt(box.dataset.fid, 10);
+  var tid = box.dataset.tid;
+  var fid = box.dataset.fid;
   if (!tid || !fid) return;
+  var fidNum = parseInt(fid, 10);
 
   function fetchJSON(url) {
     return fetch(url).then(function(r) {
@@ -23,10 +24,10 @@
       box.innerHTML = '<p class="bbs-empty">此主題無帖子</p>';
       return;
     }
-    posts.sort(function(a, b) { return a.pid - b.pid; });
+    posts.sort(function(a, b) { return (a.pid || 0) - (b.pid || 0); });
     var html = "";
     posts.forEach(function(p) {
-      var d = new Date(p.dateline * 1000);
+      var d = new Date((p.dateline || 0) * 1000);
       var ds = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
       var au = p.author ? esc(p.author) : "匿名";
       var su = p.subject ? esc(p.subject) : "";
@@ -39,27 +40,30 @@
     box.innerHTML = html;
   }
 
+  function filterByTid(posts) {
+    return posts.filter(function(p) {
+      return String(p.tid) === String(tid);
+    });
+  }
+
   function loadAndFilter(urls) {
     return Promise.all(urls.map(function(u) {
       return fetchJSON(u).catch(function() { return []; });
     })).then(function(arrays) {
       var all = [];
       arrays.forEach(function(a) { all = all.concat(a); });
-      return all.filter(function(p) { return p.tid === tid; });
+      return filterByTid(all);
     });
   }
 
-  var fidStr = String(fid).padStart(2, "0");
+  var fidStr = String(fidNum).padStart(2, "0");
   var singleUrl = "/data/posts-fid" + fidStr + ".json";
   var indexUrl = "/data/posts-fid" + fidStr + "-index.json";
 
-  // 先試單檔（直接用 GET）
   fetchJSON(singleUrl).then(function(data) {
-    // 單檔存在
-    var filtered = data.filter(function(p) { return p.tid === tid; });
+    var filtered = filterByTid(data);
     render(filtered);
   }).catch(function() {
-    // 單檔不存在，試 index 檔
     fetchJSON(indexUrl).then(function(index) {
       var chunkSet = {};
       var tidStr = String(tid);
