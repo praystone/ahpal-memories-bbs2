@@ -49,18 +49,32 @@
     });
   }
 
-  // 先試單檔，失敗則試多檔
-  var singleUrl = "/data/posts-fid" + String(fid).padStart(2, "0") + ".json";
-  var chunkUrls = [];
-  for (var i = 1; i <= 10; i++) {
-    chunkUrls.push("/data/posts-fid" + String(fid).padStart(2, "0") + "-" + String(i).padStart(2, "0") + ".json");
-  }
+  var fidStr = String(fid).padStart(2, "0");
+  var indexUrl = "/data/posts-fid" + fidStr + "-index.json";
 
-  fetch(singleUrl, { method: "HEAD" }).then(function(r) {
-    if (r.ok) return loadAndFilter([singleUrl]);
-    return loadAndFilter(chunkUrls);
+  // 先讀 index 檔，決定要載入哪些 chunk
+  fetchJSON(indexUrl).then(function(index) {
+    var chunkSet = {};
+    var tidStr = String(tid);
+    if (index[tidStr] && index[tidStr].length > 0) {
+      // 只載入這個 tid 出現的 chunk
+      index[tidStr].forEach(function(n) { chunkSet[n] = true; });
+    } else {
+      // tid 不在 index 裡，載入全部（fallback）
+      for (var i = 1; i <= 58; i++) { chunkSet[i] = true; }
+    }
+    var urls = [];
+    Object.keys(chunkSet).forEach(function(n) {
+      urls.push("/data/posts-fid" + fidStr + "-p" + String(n).padStart(2, "0") + ".json");
+    });
+    return loadAndFilter(urls);
   }).catch(function() {
-    return loadAndFilter(chunkUrls);
+    // index 檔讀取失敗，載入全部（fallback）
+    var urls = [];
+    for (var i = 1; i <= 58; i++) {
+      urls.push("/data/posts-fid" + fidStr + "-p" + String(i).padStart(2, "0") + ".json");
+    }
+    return loadAndFilter(urls);
   }).then(render).catch(function(e) {
     box.innerHTML = '<p class="bbs-error">載入失敗：' + e.message + '</p>';
   });

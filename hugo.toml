@@ -1,4 +1,4 @@
-baseURL = 'https://memories.ahpal.com/bbs2/'
+baseURL = 'https://bbs2.ahpal.com/'
 locale = 'zh-tw'
 title = 'AHPAL 回憶館 · BBS2'
 disableKinds = ['RSS', 'taxonomy', 'term']
