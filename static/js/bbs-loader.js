@@ -3,13 +3,22 @@
   if (!box) return;
   var tid = box.dataset.tid;
   var fid = box.dataset.fid;
-  if (!tid || !fid) return;
+  if (!tid || !fid) {
+    box.innerHTML = '<p class="bbs-error">缺少 tid 或 fid（tid=' + tid + ', fid=' + fid + '）</p>';
+    return;
+  }
   var fidNum = parseInt(fid, 10);
 
   function fetchJSON(url) {
     return fetch(url).then(function(r) {
-      if (!r.ok) throw new Error("not found");
-      return r.json();
+      if (!r.ok) throw new Error("HTTP " + r.status + " @ " + url);
+      return r.text().then(function(text) {
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          throw new Error("JSON 解析失敗 @ " + url + "（前 100 字：" + text.substring(0, 100) + "）");
+        }
+      });
     });
   }
 
@@ -21,7 +30,7 @@
 
   function render(posts) {
     if (posts.length === 0) {
-      box.innerHTML = '<p class="bbs-empty">此主題無帖子</p>';
+      box.innerHTML = '<p class="bbs-empty">此主題無帖子（tid=' + tid + ', fid=' + fid + '，已載入但無對應資料）</p>';
       return;
     }
     posts.sort(function(a, b) { return (a.pid || 0) - (b.pid || 0); });
@@ -63,7 +72,7 @@
   fetchJSON(singleUrl).then(function(data) {
     var filtered = filterByTid(data);
     render(filtered);
-  }).catch(function() {
+  }).catch(function(e1) {
     fetchJSON(indexUrl).then(function(index) {
       var chunkSet = {};
       var tidStr = String(tid);
@@ -77,8 +86,8 @@
         urls.push("/data/posts-fid" + fidStr + "-p" + String(n).padStart(2, "0") + ".json");
       });
       return loadAndFilter(urls);
-    }).then(render).catch(function() {
-      box.innerHTML = '<p class="bbs-empty">此主題無帖子</p>';
+    }).then(render).catch(function(e2) {
+      box.innerHTML = '<p class="bbs-error">載入失敗：' + e1.message + '</p>';
     });
   });
 })();
