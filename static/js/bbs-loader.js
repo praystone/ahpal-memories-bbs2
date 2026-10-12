@@ -53,14 +53,14 @@
   var singleUrl = "/data/posts-fid" + fidStr + ".json";
   var indexUrl = "/data/posts-fid" + fidStr + "-index.json";
 
-  // 先試單檔
-  fetch(singleUrl, { method: "HEAD" }).then(function(r) {
-    if (r.ok) {
-      // 單檔存在
-      return loadAndFilter([singleUrl]);
-    }
+  // 先試單檔（直接用 GET）
+  fetchJSON(singleUrl).then(function(data) {
+    // 單檔存在
+    var filtered = data.filter(function(p) { return p.tid === tid; });
+    render(filtered);
+  }).catch(function() {
     // 單檔不存在，試 index 檔
-    return fetchJSON(indexUrl).then(function(index) {
+    fetchJSON(indexUrl).then(function(index) {
       var chunkSet = {};
       var tidStr = String(tid);
       if (index[tidStr] && index[tidStr].length > 0) {
@@ -73,15 +73,8 @@
         urls.push("/data/posts-fid" + fidStr + "-p" + String(n).padStart(2, "0") + ".json");
       });
       return loadAndFilter(urls);
-    }).catch(function() {
-      // index 檔不存在，試 p01~p58
-      var urls = [];
-      for (var i = 1; i <= 58; i++) {
-        urls.push("/data/posts-fid" + fidStr + "-p" + String(i).padStart(2, "0") + ".json");
-      }
-      return loadAndFilter(urls);
+    }).then(render).catch(function() {
+      box.innerHTML = '<p class="bbs-empty">此主題無帖子</p>';
     });
-  }).then(render).catch(function(e) {
-    box.innerHTML = '<p class="bbs-error">載入失敗：' + e.message + '</p>';
   });
 })();
