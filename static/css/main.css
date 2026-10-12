@@ -533,3 +533,21 @@ a:hover { color: var(--gold); }
 .forum-more { text-align: right; margin-top: 12px; }
 .forum-more a { color: #D4AF37; text-decoration: none; font-size: 14px; font-weight: 600; }
 .forum-more a:hover { text-decoration: underline; }
+
+/* ==================== Footer Links ==================== */
+.footer-links {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+}
+.footer-links a {
+    color: #8B949E;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s ease;
+}
+.footer-links a:hover {
+    color: #D4AF37;
+}
